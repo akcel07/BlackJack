@@ -1,0 +1,71 @@
+<project name="cartes" default="dist" basedir=".">
+    <!-- ================= PROPRIÉTÉS ================= -->
+    <property name="app.name" value="cartes"/>
+    <property name="app.version" value="0.1"/>
+    <property name="app.fullname" value="${app.name}-${app.version}"/>
+    <property name="src.home" value="src"/>
+    <property name="build.home" value="build"/>
+    <property name="dist.home" value="dist"/>
+    <property name="javac.encoding" value="UTF-8"/>
+
+    <!-- ================= PATH ================= -->
+    <path id="compile.classpath">
+        <fileset dir="${dist.home}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- ================= CLEAN ================= -->
+    <target name="clean">
+        <delete dir="${build.home}"/>
+        <delete dir="${dist.home}"/>
+    </target>
+
+    <!-- ================= PREPARE ================= -->
+    <target name="prepare">
+        <mkdir dir="${build.home}"/>
+        <mkdir dir="${dist.home}"/>
+    </target>
+
+    <!-- ================= COMPILE ================= -->
+    <target name="compile" depends="prepare">
+        <javac srcdir="${src.home}" destdir="${build.home}" debug="true" encoding="${javac.encoding}" includeantruntime="false">
+            <classpath refid="compile.classpath"/>
+        </javac>
+        <!-- Copier les ressources si nécessaire -->
+        <copy todir="${build.home}">
+            <fileset dir="${src.home}" excludes="**/*.java"/>
+        </copy>
+    </target>
+
+    <!-- ================= DIST (JAR) ================= -->
+    <target name="dist" depends="compile">
+        <!-- Crée le jar -->
+        <jar jarfile="${dist.home}/${app.fullname}.jar" basedir="${build.home}">
+            <manifest>
+                <attribute name="Main-Class" value="cartes.MainTest"/>
+            </manifest>
+        </jar>
+
+        <!-- Copier le jar dans le projet blackjack/lib -->
+        <mkdir dir="../blackjack/lib"/>
+        <copy file="${dist.home}/${app.fullname}.jar" todir="../blackjack/lib"/>
+    </target>
+
+    <!-- ================= RUN ================= -->
+    <target name="run" depends="dist">
+        <java jar="${dist.home}/${app.fullname}.jar" fork="true"/>
+    </target>
+
+    <!-- ================= JAVADOC ================= -->
+    <target name="javadoc" depends="compile">
+        <mkdir dir="${dist.home}/docs/api"/>
+        <javadoc sourcepath="${src.home}" destdir="${dist.home}/docs/api" packagenames="*">
+            <classpath>
+                <fileset dir="${dist.home}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javadoc>
+    </target>
+</project>

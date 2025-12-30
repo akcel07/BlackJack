@@ -1,0 +1,8 @@
+blackjack
+blackjack.controller
+blackjack.model.jeu
+blackjack.model.joueur
+blackjack.model.proxy
+blackjack.model.strategy
+blackjack.model.verif
+blackjack.view
