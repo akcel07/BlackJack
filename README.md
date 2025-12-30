@@ -30,10 +30,12 @@ Le projet est structuré en deux packages principaux :
 
 2.  **Compiler le projet**
     ```bash
+    cd blackjack
     ant compile
     ```
 
 3.  **Lancer l'application**
     ```bash
+    cd blackjack
     ant run
     ```
