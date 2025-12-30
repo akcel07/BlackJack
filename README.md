@@ -37,15 +37,3 @@ Le projet est structuré en deux packages principaux :
     ```bash
     ant run
     ```
-
-
-
-## 📁 Structure du projet
-
-.
-├── build.xml # Fichier de configuration Apache Ant
-├── src/
-│ ├── cartes/ # Module bibliothèque de cartes
-│ └── blackjack/ # Module moteur du jeu Blackjack
-├── lib/ # Dépendances externes (si existantes)
-└── README.md
